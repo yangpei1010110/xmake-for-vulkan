@@ -1,11 +1,14 @@
-add_rules("mode.debug", "mode.release")
+add_rules("mode.debug","mode.releasedbg", "mode.release", "mode.minsizerel")
 set_languages("c++17")
+add_requires("tbox" ,"eigen 3.4.0" ,"glfw 3.4" , "vulkansdk")
+-- add_requires("imgui", {configs = {glfw_opengl3 = true}})
+add_requires("imgui", {configs = {glfw_vulkan = true}})
 
-target("xmake-for-dx11")
---     add_rules("win.sdk.application")
+target("xmake-for-vulkan")
+    set_default(true)
+    add_packages("eigen", "tbox", "glfw", "vulkansdk", "imgui")
     set_kind("binary")
     add_files("src/*.cpp")
-    set_toolchains("clang")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
