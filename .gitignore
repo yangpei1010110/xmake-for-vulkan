@@ -1,5 +1,5 @@
 #vscode cache
-.vscode/.cache
+.vscode/.cache/
 
 # Xmake cache
 .xmake/
