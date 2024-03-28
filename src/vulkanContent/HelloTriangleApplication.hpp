@@ -1,19 +1,21 @@
-#ifndef HELLOWORLD_HELLOTRIANGLEAPPLICATION_HPP
-#define HELLOWORLD_HELLOTRIANGLEAPPLICATION_HPP
-#pragma once
+#ifndef HELLOWORLD_HELLOTRIANGLEAPPLICATION_HPP_
+#define HELLOWORLD_HELLOTRIANGLEAPPLICATION_HPP_ 1
+
+#include <Windows.h> // Include the necessary header file
+
 #include <vector>
 
 #define GLFW_INCLUDE_VULKAN
 #include "GLFW/glfw3.h"
 #include <vulkan/vulkan.h>
 
-#include <cstdlib>
 #include <iostream>
 #include <stdexcept>
 
 class HelloTriangleApplication {
 
 public:
+  ~HelloTriangleApplication() { cleanup(); }
   const uint32_t WIDTH = 800;
   const uint32_t HEIGHT = 600;
 
@@ -28,23 +30,24 @@ private:
   GLFWwindow *window;
   VkInstance instance;
   void initWindow() {
-    if (!glfwInit()) {
+
+    if (GLFW_FALSE == glfwInit()) {
       throw std::runtime_error("failed to initialize GLFW!");
     }
 
+    // AllocConsole();
+    FreeConsole();
+
+    // 不创建OpenGL上下文
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+    // 禁止调整窗口大小
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
 
     if (!window) {
       glfwTerminate();
       throw std::runtime_error("failed to create window!");
     }
-
-    // enum all devices
-    // create logical device
-    VkDevice device;
-    VkPhysicalDevice physicalDevice;
   }
   void initVulkan() { createInstance(); }
   void mainLoop() {

@@ -649,12 +649,14 @@ int main2(int, char **) {
 
 // Main code
 int main(int, char **) {
-  HelloTriangleApplication app;
+  std::unique_ptr<HelloTriangleApplication> app =
+      std::make_unique<HelloTriangleApplication>();
   try {
-    app.run();
+    app->run();
     std::cout << "Hello, Vulkan!" << std::endl;
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
     return EXIT_FAILURE;
   }
+  return EXIT_SUCCESS;
 }
